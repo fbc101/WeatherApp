@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
+.App {
+  font-family: sans-serif;
+}
+
+.surrounding-numbers {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 100px;
+  left: 150px;
+  font-size: 24px;
+  color: #444;
+  text-align: center;
+}
+
+.surrounding-numbers span {
+  position: absolute;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 700;
+}
+
+
+.twelve {
+  top: -35px;
+  left: 43%;
+}
+  
+.one {
+  top: -15%;
+  right: 10%;
+}
+
+.eleven {
+  top: -15%;
+  left: 10%;
+}
+
+.two {
+  top: 10%;
+  right: -10%;
+}
+
+.three {
+  right: -20px;
+  top: 40%;
+}
+
+.four {
+  right: -10px;
+  top: 75%;
+}
+
+.five {
+  right: 20px;
+  top: 95%;
+}
+
+.six {
+  bottom: -35px;
+  left: 46%;
+}
+
+.seven {
+  left: 20px;
+  top: 95%;
+}
+
+.eight {
+  left: -10px;
+  top: 75%;
+}
+
+.nine {
+  left: -20px;
+  top: 40%;
+}
+
+.ten {
+  top: 10%;
+  left: -15%;
+}
+  
+
+.react-lib-clock {
+  top: 100px;
+  left: 150px;
+  position: absolute;
+}
+
+.react-lib-clock span {
+  position: absolute;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 700;
+}
