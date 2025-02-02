@@ -4,7 +4,7 @@ import locationsJson from '../data/city_lat_long.json'
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import Weather from '../components/weather_info';
-import Example from '../components/time_graph';
+import TimeTemperatureGraph from '../components/time_graph';
 
 function App() {
   const [options, setOptions] = useState([]);
@@ -40,6 +40,7 @@ function App() {
     precipitation_probability: "%",
     wind_speed_10m: "km/h"
   });
+  const [timeWeather, setTimeWeather] = useState({})
 
   axios.defaults.baseURL = 'https://api.open-meteo.com/v1/forecast';
   
@@ -73,6 +74,22 @@ function App() {
     });
   };
 
+  const cleanTimeTemperatureData = (times, temperatures) => {
+    const groupedByDate = {};
+
+    times.forEach((timestamp, idx) => {
+      const date = timestamp.split("T")[0]; // Extract YYYY-MM-DD
+      const hour = timestamp.split("T")[1]; // Extract hour
+      if (!groupedByDate[date]) {
+        groupedByDate[date] = [];
+      }
+      groupedByDate[date].push({time: hour, temperature: temperatures[idx]});
+      
+    });
+    setTimeWeather(groupedByDate);
+    console.log('groupedByDate', groupedByDate);
+  }
+
   const fetchData = async () => {
     const endpoint = `?latitude=${latLong.lat}&longitude=${latLong.long}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,wind_speed_10m&temperature_unit=fahrenheit`;
     const response = await axios.get(endpoint);
@@ -100,8 +117,8 @@ function App() {
       precipitation: response.data.hourly_units.precipitation_probability,
       humidity: response.data.hourly_units.relative_humidity_2m,
       wind: response.data.hourly_units.wind_speed_10m
-    })
-
+    });
+    cleanTimeTemperatureData(response.data.hourly.time, response.data.hourly.temperature_2m);
   }
 
   useEffect(() => {
@@ -126,6 +143,9 @@ function App() {
       <div>{cityCountry.city}, {cityCountry.country}</div>
       <Weather data={weatherNow} units={units}/>
       <ClockTemp/>
+      {timeWeather && Object.entries(timeWeather).map(data => {
+        return <TimeTemperatureGraph data={data[1]}/>
+      })}
     </div>
   );
 }
