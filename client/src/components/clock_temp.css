@@ -9,7 +9,7 @@
   position: absolute;
   top: 100px;
   left: 150px;
-  font-size: 24px;
+  font-size: 15px;
   color: #444;
   text-align: center;
 }
@@ -21,66 +21,65 @@
 }
 
 
-.twelve {
-  top: -35px;
-  left: 43%;
+.class-0 {
+  top: -30px;
+  left: 40%;
 }
   
-.one {
-  top: -15%;
+.class-1 {
+  top: -10%;
   right: 10%;
 }
 
-.eleven {
-  top: -15%;
-  left: 10%;
-}
-
-.two {
+.class-2 {
   top: 10%;
   right: -10%;
 }
 
-.three {
-  right: -20px;
+.class-3 {
+  right: -30px;
   top: 40%;
 }
 
-.four {
-  right: -10px;
+.class-4 {
+  right: -20px;
   top: 75%;
 }
 
-.five {
+.class-5 {
   right: 20px;
   top: 95%;
 }
 
-.six {
-  bottom: -35px;
-  left: 46%;
+.class-6 {
+  bottom: -30px;
+  left: 43%;
 }
 
-.seven {
+.class-7 {
   left: 20px;
   top: 95%;
 }
 
-.eight {
-  left: -10px;
+.class-8 {
+  left: -20px;
   top: 75%;
 }
 
-.nine {
-  left: -20px;
+.class-9 {
+  left: -30px;
   top: 40%;
 }
 
-.ten {
+.class-10 {
   top: 10%;
   left: -15%;
 }
   
+.class-11 {
+  top: -10%;
+  left: 10%;
+}
 
 .react-lib-clock {
   top: 100px;

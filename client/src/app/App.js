@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 import Weather from '../components/weather_info';
 import TimeTemperatureGraph from '../components/time_graph';
+import dayjs from 'dayjs';
+
 
 function App() {
   const [options, setOptions] = useState([]);
@@ -41,6 +43,7 @@ function App() {
     wind_speed_10m: "km/h"
   });
   const [timeWeather, setTimeWeather] = useState({})
+  const [todaysDate, setTodaysDate] = useState("");
 
   axios.defaults.baseURL = 'https://api.open-meteo.com/v1/forecast';
   
@@ -87,7 +90,6 @@ function App() {
       
     });
     setTimeWeather(groupedByDate);
-    console.log('groupedByDate', groupedByDate);
   }
 
   const fetchData = async () => {
@@ -106,7 +108,7 @@ function App() {
       time: response.data.current.temperature_2m,
       temperature: response.data.current.temperature_2m,
       feels_like: response.data.current.apparent_temperature,
-      precipitation: response.data.current.precipitation_probability,
+      precipitation: response.data.current.precipitation,
       humidity: response.data.current.relative_humidity_2m,
       wind: response.data.current.wind_speed_10m
     });
@@ -122,6 +124,9 @@ function App() {
   }
 
   useEffect(() => {
+    const date = new Date(); // Get the current date and time
+    setTodaysDate(date.toISOString().split('T')[0]);
+    
     fetchData();
   }, [latLong]);
 
@@ -142,10 +147,20 @@ function App() {
       </AutoComplete>
       <div>{cityCountry.city}, {cityCountry.country}</div>
       <Weather data={weatherNow} units={units}/>
-      <ClockTemp/>
-      {timeWeather && Object.entries(timeWeather).map(data => {
-        return <TimeTemperatureGraph data={data[1]}/>
-      })}
+      {timeWeather[todaysDate] && <ClockTemp temperatures={timeWeather[todaysDate]}/>}
+      <div  style={{ marginTop: '150px'}}>
+        {timeWeather && Object.entries(timeWeather).map(data => {
+          return (
+            <div class="flex-container" style={{ marginTop: '30px'}}>
+              <div>{dayjs(data[0]).format('dddd, MMMM D')}</div>
+              <div>
+                <TimeTemperatureGraph data={data[1]}/>
+              </div>
+            </div> 
+            )
+          })
+        }
+      </div>
     </div>
   );
 }

@@ -3,16 +3,25 @@ import Clock from 'react-clock';
 import 'react-clock/dist/Clock.css';
 import './clock_temp.css'
 
-function ClockTemp() {
+function ClockTemp({ temperatures }) {
   const [value, setValue] = useState(new Date());
+  const [temps, setTemps] = useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => setValue(new Date()), 1000);
-
+    cleanData();
     return () => {
       clearInterval(interval);
     };
   }, []);
+
+  const cleanData = () => {
+    const date = new Date(); // Get the current date and time
+    const hours = date.getHours(); // Get the hour (0-23)
+    const isAM = hours < 12;
+
+    isAM ? setTemps(temperatures.slice(0, 12)) : setTemps(temperatures.slice(12, 24));
+  }
 
   return (
     <div>
@@ -24,18 +33,9 @@ function ClockTemp() {
         size={150}
       />
       <div className="surrounding-numbers">
-        <span className="twelve">12</span>
-        <span className="one">1</span>
-        <span className="two">2</span>
-        <span className="three">3</span>
-        <span className="four">4</span>
-        <span className="five">5</span>
-        <span className="six">6</span>
-        <span className="seven">7</span>
-        <span className="eight">8</span>
-        <span className="nine">9</span>
-        <span className="ten">10</span>
-        <span className="eleven">11</span>
+        {temps && temps.map((temp, idx) => {
+          return <span className={`class-${idx}`}>{temp.temperature}</span>
+        })}
       </div>
     </div>
   );
