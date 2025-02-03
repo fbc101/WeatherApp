@@ -150,7 +150,7 @@ function App() {
       <AutoComplete
         popupClassName="certain-category-search-dropdown"
         popupMatchSelectWidth={400}
-        style={{ width: 400 }}
+        style={{ width: "100%" }}
         options={options.length == 0 ? [] : options}
         size="large"
         onSelect={(input) => { cleanInput(input) }}
@@ -160,7 +160,7 @@ function App() {
           onSearch={(input) => { input && cleanInput(input) }
         }></Input.Search>
       </AutoComplete>
-      <div style={{ marginLeft: 85, marginTop: 5, fontSize: 24}} >{cityCountry.city}, {cityCountry.country}</div>
+      <div style={{ fontSize: 24, textAlign: "center", marginTop: 5 }} >{cityCountry.city}, {cityCountry.country}</div>
       <Weather data={weatherNow} units={units}/>
       <img src={sun} style={{ width: 100, position: 'absolute', marginLeft: 300, marginTop: -115 }}></img>
       {timeWeather[todaysDate] && <ClockTemp temperatures={timeWeather[todaysDate]} isAM={isAM}/>}
@@ -183,7 +183,7 @@ function App() {
           </button>
         )}
         {visibleCount >= entries.length && (
-          <button onClick={hide} style={{ marginLeft: 175, marginTop: 10, padding: '10px'  }}>
+          <button onClick={hide} style={{ marginLeft: 200, marginTop: 10, padding: '10px'  }}>
             Hide 
           </button>
         )}
