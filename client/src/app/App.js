@@ -46,6 +46,9 @@ function App() {
   const [todaysDate, setTodaysDate] = useState("");
   const [isAM, setIsAM] = useState(false);
 
+  const [visibleCount, setVisibleCount] = useState(3); 
+  const entries = Object.entries(timeWeather); 
+
   axios.defaults.baseURL = 'https://api.open-meteo.com/v1/forecast';
   
   const filterLocationOptions = (input) => {
@@ -127,9 +130,18 @@ function App() {
   useEffect(() => {
     const date = new Date(); // Get the current date and time
     setTodaysDate(date.toISOString().split('T')[0]);
-    
+
     fetchData();
   }, [latLong]);
+
+
+  const loadMore = () => {
+    setVisibleCount((prev) => prev + 2); // Load 5 more entries on each click
+  };
+
+  const hide = () => {
+    setVisibleCount(3); // Load 5 more entries on each click
+  };
 
   return (
     <div>
@@ -154,17 +166,25 @@ function App() {
       </button>
       {console.log('isAM', isAM)}
       <div  style={{ marginTop: '150px'}}>
-        {timeWeather && Object.entries(timeWeather).map(data => {
-          return (
-            <div class="flex-container" style={{ marginTop: '30px'}}>
-              <div>{dayjs(data[0]).format('dddd, MMMM D')}</div>
+        {timeWeather &&
+          entries.slice(0, visibleCount).map(([date, weatherData], index) => (
+            <div key={index} className="flex-container" style={{ marginTop: '30px' }}>
+              <div>{dayjs(date).format('dddd, MMMM D')}</div>
               <div>
-                <TimeTemperatureGraph data={data[1]}/>
+                <TimeTemperatureGraph data={weatherData} />
               </div>
-            </div> 
-            )
-          })
-        }
+            </div>
+        ))}
+        {visibleCount < entries.length && (
+          <button onClick={loadMore} style={{ marginTop: '20px', padding: '10px' }}>
+            Load More
+          </button>
+        )}
+        {visibleCount == entries.length && (
+          <button onClick={hide} style={{ marginTop: '20px', padding: '10px' }}>
+            Hide 
+          </button>
+        )}
       </div>
     </div>
   );

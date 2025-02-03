@@ -41,6 +41,7 @@ function ClockTemp({ temperatures, isAM }) {
           return <span className={`class-${idx}`}>{temp.temperature}</span>
         })}
       </div>
+      <div className="surrounding-numbers" style={{ marginTop:100 }}> {isAM ? 'AM' : 'PM' }</div>
     </div>
   );
 }
