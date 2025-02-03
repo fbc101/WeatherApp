@@ -25,7 +25,7 @@ function ClockTemp({ temperatures, isAM }) {
 
   useEffect(() => {
     cleanData();
-  }, [isAM]);
+  }, [isAM, temperatures]);
 
   return (
     <div>
