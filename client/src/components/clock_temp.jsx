@@ -3,7 +3,7 @@ import Clock from 'react-clock';
 import 'react-clock/dist/Clock.css';
 import './clock_temp.css'
 
-function ClockTemp({ temperatures }) {
+function ClockTemp({ temperatures, isAM }) {
   const [value, setValue] = useState(new Date());
   const [temps, setTemps] = useState([]);
 
@@ -16,12 +16,16 @@ function ClockTemp({ temperatures }) {
   }, []);
 
   const cleanData = () => {
-    const date = new Date(); // Get the current date and time
-    const hours = date.getHours(); // Get the hour (0-23)
-    const isAM = hours < 12;
+    // const date = new Date(); // Get the current date and time
+    // const hours = date.getHours(); // Get the hour (0-23)
+    // const isAM = hours < 12;
 
     isAM ? setTemps(temperatures.slice(0, 12)) : setTemps(temperatures.slice(12, 24));
   }
+
+  useEffect(() => {
+    cleanData();
+  }, [isAM]);
 
   return (
     <div>

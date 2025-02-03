@@ -44,6 +44,7 @@ function App() {
   });
   const [timeWeather, setTimeWeather] = useState({})
   const [todaysDate, setTodaysDate] = useState("");
+  const [isAM, setIsAM] = useState(false);
 
   axios.defaults.baseURL = 'https://api.open-meteo.com/v1/forecast';
   
@@ -147,7 +148,11 @@ function App() {
       </AutoComplete>
       <div>{cityCountry.city}, {cityCountry.country}</div>
       <Weather data={weatherNow} units={units}/>
-      {timeWeather[todaysDate] && <ClockTemp temperatures={timeWeather[todaysDate]}/>}
+      {timeWeather[todaysDate] && <ClockTemp temperatures={timeWeather[todaysDate]} isAM={isAM}/>}
+      <button onClick={() => setIsAM(!isAM)}>
+        Switch to {isAM ? 'PM' : 'AM'}
+      </button>
+      {console.log('isAM', isAM)}
       <div  style={{ marginTop: '150px'}}>
         {timeWeather && Object.entries(timeWeather).map(data => {
           return (
