@@ -167,7 +167,6 @@ function App() {
       <button onClick={() => setIsAM(!isAM)} style={{ marginLeft: 175, marginTop: 185 }}>
         Switch to {isAM ? 'PM' : 'AM'}
       </button>
-      {console.log(todaysDate)}
       <div style={{ marginTop: 25 }}>
         {timeWeather &&
           entries.slice(0, visibleCount).map(([date, weatherData], index) => (

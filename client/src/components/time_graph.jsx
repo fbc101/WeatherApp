@@ -9,7 +9,7 @@ const TimeTemperatureGraph = ({ data }) => {
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
-          <XAxis dataKey="time" />
+          <XAxis dataKey="time" tick={{ fontSize: 12 }} />
           <YAxis />
           <Tooltip />
           <Area type="monotone" dataKey="temperature" stroke="#FAB200" fill="#FFCC02">
