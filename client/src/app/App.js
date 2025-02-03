@@ -60,11 +60,15 @@ function App() {
     }
 
     const lower = input.toLowerCase();
-    
+    const cleanedLower = lower.replace(/[^\w\s]|_/g, '').replace(/\s+/g, ' ').trim();
+
     // Filter courses dynamically
     const filtered = locationsJson.locations
-       .filter((loc) => (loc.city && loc.city.toLowerCase().includes(lower) ||
-        (loc.country && loc.country.toLowerCase().includes(lower))))
+       .filter(
+        (loc) => (loc.city && loc.city.toLowerCase().includes(cleanedLower)) ||
+        (loc.country && loc.country.toLowerCase().includes(cleanedLower)) ||
+        (loc.city && loc.country && `${loc.city} ${loc.country}`.toLowerCase().includes(cleanedLower))
+       )
        .map((loc) => ({ value: `${loc.city}, ${loc.country} | ${loc.lat},${loc.long}` })); 
     setOptions(filtered); 
   };
@@ -72,7 +76,7 @@ function App() {
   const cleanInput = (input) => {
     const cleanLatLong = input.split('|')[1].trim().split(',');
     const cleanCityCountry = input.split('|')[0].trim().split(',');
-    console.log('cleanLatLong', cleanLatLong);
+
     setLatLong({
       lat: cleanLatLong[0],
       long: cleanLatLong[1]
@@ -142,7 +146,7 @@ function App() {
   };
 
   const hide = () => {
-    setVisibleCount(3); // Load 5 more entries on each click
+    setVisibleCount(3); // reset to 3
   };
 
   return (
