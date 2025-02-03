@@ -7,7 +7,7 @@
   width: 150px;
   height: 150px;
   position: absolute;
-  top: 100px;
+  top: 225px;
   left: 150px;
   font-size: 15px;
   color: #444;
@@ -82,7 +82,7 @@
 }
 
 .react-lib-clock {
-  top: 100px;
+  top: 225px;
   left: 150px;
   position: absolute;
 }

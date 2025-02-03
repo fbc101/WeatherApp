@@ -2,7 +2,7 @@
 function Weather({data, units}) {
     return(
         <div>
-            <div>
+            <div style={{ width: 150, height: 60, fontSize: 48, marginTop: 10 }}>
                 {data.temperature} {units.temperature}
             </div>
             <div>

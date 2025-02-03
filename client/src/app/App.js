@@ -6,6 +6,8 @@ import axios from 'axios'
 import Weather from '../components/weather_info';
 import TimeTemperatureGraph from '../components/time_graph';
 import dayjs from 'dayjs';
+import sun from '../assets/sun.png';
+import { DateTime } from "luxon";
 
 
 function App() {
@@ -97,7 +99,7 @@ function App() {
   }
 
   const fetchData = async () => {
-    const endpoint = `?latitude=${latLong.lat}&longitude=${latLong.long}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,wind_speed_10m&temperature_unit=fahrenheit`;
+    const endpoint = `?latitude=${latLong.lat}&longitude=${latLong.long}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,wind_speed_10m&temperature_unit=fahrenheit&past_days=1`;
     const response = await axios.get(endpoint);
     
     setWeatherData({
@@ -128,8 +130,8 @@ function App() {
   }
 
   useEffect(() => {
-    const date = new Date(); // Get the current date and time
-    setTodaysDate(date.toISOString().split('T')[0]);
+    const estDate = DateTime.now().setZone("America/New_York");
+    setTodaysDate(estDate.toISO().split('T')[0]);
 
     fetchData();
   }, [latLong]);
@@ -158,17 +160,18 @@ function App() {
           onSearch={(input) => { input && cleanInput(input) }
         }></Input.Search>
       </AutoComplete>
-      <div>{cityCountry.city}, {cityCountry.country}</div>
+      <div style={{ marginLeft: 85, marginTop: 5, fontSize: 24}} >{cityCountry.city}, {cityCountry.country}</div>
       <Weather data={weatherNow} units={units}/>
+      <img src={sun} style={{ width: 100, position: 'absolute', marginLeft: 300, marginTop: -115 }}></img>
       {timeWeather[todaysDate] && <ClockTemp temperatures={timeWeather[todaysDate]} isAM={isAM}/>}
-      <button onClick={() => setIsAM(!isAM)}>
+      <button onClick={() => setIsAM(!isAM)} style={{ marginLeft: 175, marginTop: 185 }}>
         Switch to {isAM ? 'PM' : 'AM'}
       </button>
-      {console.log('isAM', isAM)}
-      <div  style={{ marginTop: '150px'}}>
+      {console.log(todaysDate)}
+      <div style={{ marginTop: 25 }}>
         {timeWeather &&
           entries.slice(0, visibleCount).map(([date, weatherData], index) => (
-            <div key={index} className="flex-container" style={{ marginTop: '30px' }}>
+            <div key={index} className="flex-container" style={{ marginTop: '5px' }}>
               <div>{dayjs(date).format('dddd, MMMM D')}</div>
               <div>
                 <TimeTemperatureGraph data={weatherData} />
@@ -176,12 +179,12 @@ function App() {
             </div>
         ))}
         {visibleCount < entries.length && (
-          <button onClick={loadMore} style={{ marginTop: '20px', padding: '10px' }}>
+          <button onClick={loadMore} style={{ marginLeft: 175, marginTop: '20px', padding: '10px' }}>
             Load More
           </button>
         )}
-        {visibleCount == entries.length && (
-          <button onClick={hide} style={{ marginTop: '20px', padding: '10px' }}>
+        {visibleCount >= entries.length && (
+          <button onClick={hide} style={{ marginLeft: 175, marginTop: 10, padding: '10px'  }}>
             Hide 
           </button>
         )}
